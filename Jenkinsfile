@@ -28,6 +28,7 @@ pipeline {
               }
             }
             steps {
+		echo "El test ha fallado $currentBuild.result" 
                 sh 'make publish'
             }
         }
