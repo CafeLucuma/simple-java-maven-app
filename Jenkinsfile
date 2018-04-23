@@ -13,6 +13,7 @@ pipeline {
                 sh 'mvn test'
 		echo 'Testing echo....'
 		sh 'ls -l'
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
             }
             post {
                 always {
@@ -24,7 +25,7 @@ pipeline {
 	stage('Deploy') {
             when {
               expression {
-                currentBuild.result == null || currentBuild.result == 'FAILURE' 
+                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
               }
             }
             steps {
