@@ -33,9 +33,11 @@ pipeline {
             post {
                 post {
 			always {
+			    echo "Escribiendo reporte"
 			    junit '**/target/*.xml'
 			}
 			failure {
+			    echo "Test fallido, enviando mail"
 			    mail to: oscar.carrasco@akzio.cl, subject: 'The Pipeline failed :('
 			}
 		    }
