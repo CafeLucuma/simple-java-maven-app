@@ -33,7 +33,7 @@ pipeline {
   stage('Testing SonarQube'){
     steps {
         withSonarQubeEnv('SonarQube_Akzio') {
-            sh 'mvn clean package sonar:sonar ' + 
+            sh 'mvn sonar:sonar ' + 
             '-Dsonar.junit.reportPaths=target/surefire-reports/'
         }
     }
