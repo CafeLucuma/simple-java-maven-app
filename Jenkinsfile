@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	environment { 
 		CC = 'clang'
-		BITBUCKET_COMMON_CREDS = credentials('user:password')
+		JENKINS_COMMON_CREDS = credentials('jenkins-credentials')
 
 	}
     stages {
