@@ -13,7 +13,6 @@ pipeline {
                 sh 'mvn test'
 		echo 'Testing echo....'
 		sh 'ls -l'
-		echo Container.id || true
             }
             post {
                 always {
