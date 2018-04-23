@@ -5,6 +5,9 @@ pipeline {
 		JENKINS_COMMON_CREDS = credentials('jenkins-credentials')
 
 	}
+	parameters {
+        	string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
+	}
     stages {
 	
         stage('Build') { 
@@ -25,6 +28,7 @@ pipeline {
 		echo 'Testing echo....'
 		sh 'ls -l'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+		echo "testing parameters: ${params.Greeting}"
             }
             post {
                 always {
