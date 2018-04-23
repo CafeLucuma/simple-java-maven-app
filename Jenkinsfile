@@ -6,9 +6,9 @@ pipeline {
 
 	}
 	parameters {
-       string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
-   }
-   stages {
+     string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
+ }
+ stages {
 
     stage('Build') { 
         steps {
@@ -16,19 +16,22 @@ pipeline {
         }
     }
     stage('Testing SonarQube'){
-        def scannerHome = tool 'SonarQube Scanner 2.8';
-        withSonarQubeEnv('My SonarQube Server') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
+        steps {
+            def scannerHome = tool 'SonarQube Scanner 2.8';
+            withSonarQubeEnv('My SonarQube Server') {
+              sh "${scannerHome}/bin/sonar-scanner"
+          }
+      }
+      
 
-    }
-    stage('Test') {
-       environment {
+  }
+  stage('Test') {
+     environment {
         DEBUG_FLAGS = '-g'
     }
-        steps {
-      }
-  post {
+    steps {
+    }
+    post {
       always {
           echo "Escribiendo reporte"
           junit '**/target/*.xml'
