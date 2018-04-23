@@ -18,7 +18,7 @@ pipeline {
             DEBUG_FLAGS = '-g'
         }
         steps {
-            echo "Step"
+            sh 'mvn test'
         }
         post {
           always {
