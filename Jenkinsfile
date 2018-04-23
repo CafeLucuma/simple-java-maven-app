@@ -20,27 +20,27 @@ pipeline {
                 DEBUG_FLAGS = '-g'
             }
             steps {
-		echo env.CC 
-		echo env.DEBUG_FLAGS
+        		echo env.CC 
+        		echo env.DEBUG_FLAGS
                 sh 'printenv'
                 sh 'make check || true' 
                 sh 'mvn test'
-		echo 'Testing echo....'
-		sh 'ls -l'
+        		echo 'Testing echo....'
+        		sh 'ls -l'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-		echo "testing parameters: ${params.Greeting}"
+        		echo "testing parameters: ${params.Greeting}"
             }
-            post {
-		always {
-		    echo "Escribiendo reporte"
-		    junit '**/target/*.xml'
-		}
-		failure {
-		    echo "Test fallido, enviando mail"
-		    mail to: oscar.carrasco@akzio.cl, subject: 'The Pipeline failed :('
-		}
+        post {
+    		always {
+    		    echo "Escribiendo reporte"
+    		    junit '**/target/*.xml'
+    		}
+    		failure {
+    		    echo "Test fallido, enviando mail"
+    		    mail to: oscar.carrasco@akzio.cl, subject: 'The Pipeline failed :('
+    		}
 	    }
-        }
+    }
 	stage('Deploy') {
             when {
               expression {
