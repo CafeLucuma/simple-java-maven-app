@@ -26,13 +26,12 @@ pipeline {
         steps{
             script {
                 env.qg = waitForQualityGate() 
-                if (qg.status != 'OK') {
+                if (env.qg.status != 'OK') {
                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
                }
-            echo "Estado de ĺa quality gate: ${env.qg}"
            }
+           echo "Estado de ĺa quality gate: ${env.qg}"
        }
-
    }
 
    stage('Test') {
