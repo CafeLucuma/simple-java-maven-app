@@ -25,8 +25,8 @@ pipeline {
         }
         steps{
             script {
-                env.qg = waitForQualityGate() 
-                if (env.qg.status != 'OK') {
+                qg = waitForQualityGate() 
+                if (qg.status != 'OK') {
                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
                }
            }
