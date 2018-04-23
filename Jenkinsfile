@@ -31,10 +31,14 @@ pipeline {
 		echo "testing parameters: ${params.Greeting}"
             }
             post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-	            echo currentBuild.result
-                }
+                post {
+			always {
+			    junit '**/target/*.xml'
+			}
+			failure {
+			    mail to: oscar.carrasco@akzio.cl, subject: 'The Pipeline failed :('
+			}
+		    }
             }
         }
 	stage('Deploy') {
@@ -44,7 +48,7 @@ pipeline {
               }
             }
             steps {
-		echo "El test ha fallado $currentBuild.result" 
+		echo "El test ha sido exitoso $currentBuild.result" 
                 sh 'make publish'
             }
         }
