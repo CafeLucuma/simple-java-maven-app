@@ -9,6 +9,7 @@ pipeline {
         }
 	stage('Test') {
             steps {
+                sh 'make check || true' 
                 sh 'mvn test'
 		echo 'Testing echo....'
 		sh 'ls -l'
