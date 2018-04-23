@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	environment { 
-		CC = 'uSED IN ALL STAGES'
+		CC = 'clang'
 	}
     stages {
 	
@@ -13,11 +13,11 @@ pipeline {
 	stage('Test') {
             steps {
 	    environment {
-		LOL = 'Used only in this stage'
                 DEBUG_FLAGS = '-g'
             }
             steps {
-		echo env.LOL
+		echo env.CC 
+		echo env.DEBUG_FLAGS
                 sh 'printenv'
             }
                 sh 'make check || true' 
