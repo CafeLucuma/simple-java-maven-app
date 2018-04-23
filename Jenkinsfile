@@ -22,15 +22,16 @@ pipeline {
     stage("SonarQube Quality Gate") { 
        options{
         timeout(time: 1, unit: 'HOURS')
-        steps{
-           def qg = waitForQualityGate() 
-           if (qg.status != 'OK') {
-             error "Pipeline aborted due to quality gate failure: ${qg.status}"
-         }
+    }
+    steps{
+       def qg = waitForQualityGate() 
+       if (qg.status != 'OK') {
+         error "Pipeline aborted due to quality gate failure: ${qg.status}"
      }
-
  }
+
 }
+
 stage('Test') {
  environment {
     DEBUG_FLAGS = '-g'
