@@ -3,7 +3,7 @@ pipeline {
 	environment { 
 		CC = 'clang'
 		JENKINS_COMMON_CREDS = credentials('jenkins-credentials')
-
+        qg = null
 	}
  stages {
 
@@ -24,7 +24,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS')
     }
     steps{
-       def qg = waitForQualityGate() 
+       env.qg = waitForQualityGate() 
        if (qg.status != 'OK') {
          error "Pipeline aborted due to quality gate failure: ${qg.status}"
      }
