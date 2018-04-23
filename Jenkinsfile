@@ -29,6 +29,7 @@ pipeline {
         DEBUG_FLAGS = '-g'
     }
     steps {
+        echo "Step"
     }
     post {
       always {
