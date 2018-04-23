@@ -5,10 +5,7 @@ pipeline {
 		JENKINS_COMMON_CREDS = credentials('jenkins-credentials')
 
 	}
-	parameters {
-     string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
- }
- stages {
+   stages {
 
     stage('Build') { 
         steps {
@@ -19,27 +16,33 @@ pipeline {
         steps {
             withSonarQubeEnv('SonarQube_Akzio') {
                 sh 'mvn clean package sonar:sonar'
-          }
-      }
-
-
-  }
-  stage('Test') {
-     environment {
-        DEBUG_FLAGS = '-g'
+            }
+        }
     }
-    steps {
-        echo "Step"
-    }
-    post {
-      always {
-          echo "Escribiendo reporte"
-          junit '**/target/*.xml'
-      }
-      failure {
-          echo "Test fallido, enviando mail"
-      }
+    stage("SonarQube Quality Gate") { 
+        timeout(time: 1, unit: 'HOURS') { 
+         def qg = waitForQualityGate() 
+         if (qg.status != 'OK') {
+           error "Pipeline aborted due to quality gate failure: ${qg.status}"
+       }
+   }
+}
+stage('Test') {
+   environment {
+    DEBUG_FLAGS = '-g'
+}
+steps {
+    echo "Step"
+}
+post {
+  always {
+      echo "Escribiendo reporte"
+      junit '**/target/*.xml'
   }
+  failure {
+      echo "Test fallido, enviando mail"
+  }
+}
 }
 }
 }
