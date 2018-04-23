@@ -37,7 +37,6 @@ pipeline {
     		}
     		failure {
     		    echo "Test fallido, enviando mail"
-    		    mail to: oscar.carrasco@akzio.cl, subject: 'The Pipeline failed :('
     		}
 	    }
     }
