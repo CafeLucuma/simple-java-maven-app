@@ -5,7 +5,7 @@ pipeline {
 		JENKINS_COMMON_CREDS = credentials('jenkins-credentials')
 
 	}
-   stages {
+ stages {
 
     stage('Build') { 
         steps {
@@ -20,20 +20,19 @@ pipeline {
         }
     }
     stage("SonarQube Quality Gate") { 
+       options{
+        timeout(time: 1, unit: 'HOURS')
         steps{
-            options{
-                timeout(time: 1, unit: 'HOURS') { 
-                 def qg = waitForQualityGate() 
-                 if (qg.status != 'OK') {
-                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
-               }
-           }
-       }
-       
-   }
+           def qg = waitForQualityGate() 
+           if (qg.status != 'OK') {
+             error "Pipeline aborted due to quality gate failure: ${qg.status}"
+         }
+     }
+
+ }
 }
 stage('Test') {
-   environment {
+ environment {
     DEBUG_FLAGS = '-g'
 }
 steps {
