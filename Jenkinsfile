@@ -11,7 +11,6 @@ pipeline {
             }
         }
 	stage('Test') {
-            steps {
 	    environment {
                 DEBUG_FLAGS = '-g'
             }
@@ -19,7 +18,6 @@ pipeline {
 		echo env.CC 
 		echo env.DEBUG_FLAGS
                 sh 'printenv'
-            }
                 sh 'make check || true' 
                 sh 'mvn test'
 		echo 'Testing echo....'
