@@ -14,7 +14,7 @@ pipeline {
         }
 
         stage('Test') {
-         environment {
+           environment {
             DEBUG_FLAGS = '-g'
         }
         steps {
@@ -23,7 +23,7 @@ pipeline {
         post {
           always {
               echo "Escribiendo reporte"
-              junit '**/target/*.xml'
+              junit 'target/surefire-reports/*.xml'
           }
           failure {
               echo "Test fallido, enviando mail"
@@ -40,17 +40,17 @@ pipeline {
     }
 }
 stage("SonarQube Quality Gate") { 
- options{
+   options{
     timeout(time: 1, unit: 'HOURS')
 }
 steps{
     script {
         qg = waitForQualityGate() 
         if (qg.status != 'OK') {
-           error "Pipeline aborted due to quality gate failure: ${qg.status}"
-       }
-   }
-   echo "Estado de ĺa quality gate: ${qg.status}"
+         error "Pipeline aborted due to quality gate failure: ${qg.status}"
+     }
+ }
+ echo "Estado de ĺa quality gate: ${qg.status}"
 }
 }
 }
