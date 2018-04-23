@@ -29,7 +29,7 @@ pipeline {
                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
                }
            }
-           echo "Estado de ĺa quality gate: ${qg.status}"
+           echo "Estado de ĺa quality gate: " + qg.status
        }
    }
 
