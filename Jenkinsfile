@@ -1,5 +1,8 @@
 pipeline {
-	agent none
+	agent any
+    tools {
+                maven 'maven' 
+            }
     stages {
         stage('Build') { 
             agent{
@@ -11,6 +14,7 @@ pipeline {
         }
 
         stage('Test') {
+            
             agent {
                 label 'linux'
             }
