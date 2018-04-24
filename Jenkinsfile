@@ -1,25 +1,24 @@
 pipeline {
-	agent any
-	environment { 
-		CC = 'clang'
-		JENKINS_COMMON_CREDS = credentials('jenkins-credentials')
-        qg = null
-    }
+	agent none
     stages {
-
         stage('Build') { 
+            agent{
+                label 'master'
+            }
             steps {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
 
         stage('Test') {
-           environment {
-            DEBUG_FLAGS = '-g'
+            agent {
+                label 'linux'
+            }
+            steps {
+                sh 'mvn test'
+            }
         }
-        steps {
-            sh 'mvn test'
-        }
+        
         post {
           always {
               echo "Escribiendo reporte"
@@ -31,6 +30,9 @@ pipeline {
       }
   }
   stage('Testing SonarQube'){
+    agent {
+        label 'linux'
+    }
     steps {
         withSonarQubeEnv('SonarQube_Akzio') {
             sh 'mvn sonar:sonar ' + 
@@ -39,18 +41,21 @@ pipeline {
     }
 }
 stage("SonarQube Quality Gate") { 
-   options{
-    timeout(time: 1, unit: 'HOURS')
-}
-steps{
-    script {
-        qg = waitForQualityGate() 
-        if (qg.status != 'OK') {
-         error "Pipeline aborted due to quality gate failure: ${qg.status}"
-     }
- }
- echo "Estado de ĺa quality gate: ${qg.status}"
-}
+    agent {
+        label 'linux'
+    }
+    options{
+        timeout(time: 1, unit: 'HOURS')
+    }
+    steps{
+        script {
+            qg = waitForQualityGate() 
+            if (qg.status != 'OK') {
+               error "Pipeline aborted due to quality gate failure: ${qg.status}"
+           }
+       }
+       echo "Estado de ĺa quality gate: ${qg.status}"
+   }
 }
 }
 }
