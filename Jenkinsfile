@@ -20,9 +20,9 @@ pipeline {
             }
             steps {
                 sh 'mvn test'
-                pwd
+                echo pwd
                 echo 'Is unix: ' + isUnix
-                
+
             }
             post {
               always {
