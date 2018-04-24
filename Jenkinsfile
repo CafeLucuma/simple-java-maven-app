@@ -14,7 +14,6 @@ pipeline {
         }
 
         stage('Test') {
-            
             agent {
                 label 'linux'
             }
