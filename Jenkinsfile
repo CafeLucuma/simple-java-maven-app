@@ -14,12 +14,14 @@ pipeline {
         }
 
         stage('Test') {
-            
+
             agent {
                 label 'linux'
             }
             steps {
                 sh 'mvn test'
+                pwd
+                echo 'Is unix: ' + isUnix
             }
             post {
               always {
