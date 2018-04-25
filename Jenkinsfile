@@ -47,8 +47,7 @@ pipeline {
                 def scanner = tool 'SonarScanner';
                 withSonarQubeEnv('SonarQube_Akzio') {
                   echo "Sonar scanner path: " + scanner
-                  sh "${scanner}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=simple-app-jenks -Dsonar.sources   
- =/var/jenkins_home/workspace/hello-world-app-pipeline/src"
+                  sh "${scanner}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=simple-app-jenks -Dsonar.sources=/var/jenkins_home/workspace/hello-world-app-pipeline/src"
               }
           }
 
