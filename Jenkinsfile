@@ -16,7 +16,7 @@ pipeline {
         stage('Test') {
 
             agent {
-                label 'linux'
+                label 'docker'
             }
             steps {
                 sh 'mvn test'
