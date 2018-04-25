@@ -41,11 +41,14 @@ pipeline {
             label 'linux'
         }
         steps {
-            scanner = tool 'SonarScanner';
-            withSonarQubeEnv('SonarQube_Akzio') {
-              echo "Sonar scanner path: " + $scanner
-              sh "${scanner}/bin/sonar-scanner"
+            script {
+                scanner = tool 'SonarScanner';
+                withSonarQubeEnv('SonarQube_Akzio') {
+                  echo "Sonar scanner path: " + $scanner
+                  sh "${scanner}/bin/sonar-scanner"
+              }
           }
+          
       }
   }
   stage("SonarQube Quality Gate") { 
@@ -59,11 +62,11 @@ pipeline {
         script {
             qg = waitForQualityGate() 
             if (qg.status != 'OK') {
-               error "Pipeline aborted due to quality gate failure: ${qg.status}"
-           }
-       }
-       echo "Estado de ĺa quality gate: ${qg.status}"
-   }
+             error "Pipeline aborted due to quality gate failure: ${qg.status}"
+         }
+     }
+     echo "Estado de ĺa quality gate: ${qg.status}"
+ }
 }
 
 }
