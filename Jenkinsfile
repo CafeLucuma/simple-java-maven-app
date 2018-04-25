@@ -1,5 +1,5 @@
 pipeline {
-	agent any
+	agent 'master'
     tools {
         maven 'maven' 
     }
@@ -37,7 +37,7 @@ pipeline {
       }
       stage('Testing SonarQube'){
         agent {
-            label 'linux'
+            label 'docker'
         }
         steps {
             script {
