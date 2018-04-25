@@ -56,9 +56,6 @@ pipeline {
       }
   }
   stage("SonarQube Quality Gate") { 
-    agent {
-        label 'docker'
-    }
     options{
         timeout(time: 1, unit: 'HOURS')
     }
