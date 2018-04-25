@@ -39,7 +39,7 @@ pipeline {
       }
       stage('Testing SonarQube'){
         agent {
-            label 'docker'
+            label 'master'
         }
         steps {
             script {
