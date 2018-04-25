@@ -5,7 +5,6 @@ pipeline {
     }
     environment {
         qg = null
-        scanner =  null
     }
 
     stages {
@@ -42,13 +41,16 @@ pipeline {
         }
         steps {
             script {
-                scanner = tool 'SonarScanner';
+                echo "Inicializando sonar"
+                def scanner = tool 'SonarScanner';
                 withSonarQubeEnv('SonarQube_Akzio') {
                   echo "Sonar scanner path: " + $scanner
                   sh "${scanner}/bin/sonar-scanner"
               }
           }
-          
+
+          echo "Sonar terminado"
+
       }
   }
   stage("SonarQube Quality Gate") { 
