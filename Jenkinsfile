@@ -44,7 +44,7 @@ pipeline {
                 echo "Inicializando sonar"
                 def scanner = tool 'SonarScanner';
                 withSonarQubeEnv('SonarQube_Akzio') {
-                  echo "Sonar scanner path: " + ${scanner}
+                  echo "Sonar scanner path: " + scanner
                   sh "${scanner}/bin/sonar-scanner"
               }
           }
