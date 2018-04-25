@@ -1,8 +1,13 @@
 pipeline {
 	agent any
     tools {
-        sonarscanner 'SonarQube Scanner 3.1'
+        maven 'maven' 
     }
+    environment {
+        qg = null
+        scanner =  null
+    }
+
     stages {
         stage('Build') { 
             agent{
@@ -36,9 +41,10 @@ pipeline {
             label 'linux'
         }
         steps {
+            scanner = tool 'SonarScanner';
             withSonarQubeEnv('SonarQube_Akzio') {
-              echo "Sonar scanner path: " + ${SonarScanner}
-              sh "${SonarScanner}/bin/sonar-scanner"
+              echo "Sonar scanner path: " + $scanner
+              sh "${scanner}/bin/sonar-scanner"
           }
       }
   }
