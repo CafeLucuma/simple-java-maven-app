@@ -1,8 +1,9 @@
 pipeline {
 	agent any
     tools {
-                maven 'maven' 
-            }
+        maven 'maven' 
+        sonarscanner 'SonarScanner'
+    }
     stages {
         stage('Build') { 
             agent{
@@ -28,38 +29,38 @@ pipeline {
               }
               failure {
                   echo "Test fallido, enviando mail"
-                }
-             }
+              }
           }
-          stage('Testing SonarQube'){
-            agent {
-                label 'linux'
-            }
-            steps {
-                withSonarQubeEnv('SonarQube_Akzio') {
-                    sh 'mvn sonar:sonar ' + 
-                    '-Dsonar.junit.reportPaths=target/surefire-reports/'
-                }
-            }
+      }
+      stage('Testing SonarQube'){
+        agent {
+            label 'linux'
         }
-        stage("SonarQube Quality Gate") { 
-            agent {
-                label 'linux'
-            }
-            options{
-                timeout(time: 1, unit: 'HOURS')
-            }
-            steps{
-                script {
-                    qg = waitForQualityGate() 
-                    if (qg.status != 'OK') {
-                       error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                   }
-               }
-               echo "Estado de ĺa quality gate: ${qg.status}"
+        steps {
+            withSonarQubeEnv('SonarQube_Akzio') {
+              echo "Sonar scanner path: " + ${SonarScanner}
+              sh "${SonarScanner}/bin/sonar-scanner"
+          }
+      }
+  }
+  stage("SonarQube Quality Gate") { 
+    agent {
+        label 'linux'
+    }
+    options{
+        timeout(time: 1, unit: 'HOURS')
+    }
+    steps{
+        script {
+            qg = waitForQualityGate() 
+            if (qg.status != 'OK') {
+               error "Pipeline aborted due to quality gate failure: ${qg.status}"
            }
        }
+       echo "Estado de ĺa quality gate: ${qg.status}"
+   }
+}
 
-    }
+}
 }
 
