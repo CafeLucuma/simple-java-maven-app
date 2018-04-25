@@ -47,7 +47,7 @@ pipeline {
                 def scanner = tool 'SonarScanner';
                 withSonarQubeEnv('SonarQube_Akzio') {
                   echo "Sonar scanner path: " + scanner
-                  sh "${scanner}/bin/sonar-scanner"
+                  sh "${scanner}/bin/sonar-scanner -Dsonar.login=admin -Dsonar.password=admin"
               }
           }
 
