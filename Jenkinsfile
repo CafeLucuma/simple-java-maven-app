@@ -17,11 +17,16 @@ pipeline {
                 sh 'mvn test'
             }
         }
-         stage('Deliver for development') {
+        stage('Deliver for development') {
             when {
                 branch 'development'
             }
             steps {
+                sshagent (credentials: ['6436e7cc-2e12-4a59-ad70-9fa23ef26c03']) {
+                    sh 'ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 uname -a'
+                    sh 'echo $MACHINE_NAME'
+
+                }
                 echo "Running for development"
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
             }
