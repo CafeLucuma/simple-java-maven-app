@@ -11,9 +11,9 @@ pipeline {
             steps {
                 sshagent (credentials: ['ssh-local']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 uname -a \
-                        whoami \
-                        pwd \
+                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 uname -a;
+                        whoami;
+                        pwd;
                         echo "$MACHINE_NAME"
                         '''     
                 }
