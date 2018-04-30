@@ -11,9 +11,9 @@ pipeline {
             steps {
                 sshagent (credentials: ['ssh-local']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158;
-                        pwd;
-                        echo $MACHINE_IP;
+                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 \
+                        pwd \
+                        echo "$MACHINE_IP" \
                         '''     
                 }
                 echo "Running for development"
