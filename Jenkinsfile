@@ -10,9 +10,11 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['ssh-local']) {
-                    sh 'ssh -o StrictHostKeyChecking=no admin1@192.168.0.158'
-                    pwd;
-                    echo $MACHINE_IP;
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158;
+                        pwd;
+                        echo $MACHINE_IP;
+                        '''     
                 }
                 echo "Running for development"
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
