@@ -11,10 +11,10 @@ pipeline {
             steps {
                 sshagent (credentials: ['ssh-local']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 \
-                        pwd \
-                        echo "$MACHINE_NAME" \
-                        whoami \
+                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158; \
+                        pwd; \
+                        echo "$MACHINE_NAME"; \
+                        whoami; \
                         '''     
                 }
                 echo "Running for development"
