@@ -10,12 +10,9 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['ssh-local']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 uname -a;
-                        whoami;
-                        pwd;
-                        echo "$MACHINE_NAME"
-                        '''     
+                    sh 'ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 uname -a'
+                    sh 'whoami'
+                          
                 }
                 echo "Running for development"
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
