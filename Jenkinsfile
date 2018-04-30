@@ -3,9 +3,6 @@ pipeline {
     tools {
         maven 'maven'
     }
-    environment {
-        CI = 'true'
-    }
     stages {
         stage('Deliver for development') {
             when {
@@ -15,6 +12,7 @@ pipeline {
                 sshagent (credentials: ['07f7c5fc-81d1-4d28-a966-f8fafad37aee']) {
                     sh 'whoami'
                     sh 'echo $MACHINE_NAME'
+                    sh 'ls'
                 }
                 echo "Running for development"
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
