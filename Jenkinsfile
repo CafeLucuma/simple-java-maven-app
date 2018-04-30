@@ -13,7 +13,7 @@ pipeline {
                     sh '''
                         ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 \
                         pwd \
-                        echo $MACHINE_NAME
+                        echo "\$MACHINE_NAME"
                         '''     
                 }
                 echo "Running for development"
