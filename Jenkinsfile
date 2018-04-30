@@ -7,23 +7,13 @@ pipeline {
         CI = 'true'
     }
     stages {
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package' 
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
         stage('Deliver for development') {
             when {
                 branch 'development'
             }
             steps {
                 sshagent (credentials: ['07f7c5fc-81d1-4d28-a966-f8fafad37aee']) {
-                    sh 'ssh -o StrictHostKeyChecking=no admin1@192.168.0.158 uname -a'
+                    sh 'whoami'
                     sh 'echo $MACHINE_NAME'
                 }
                 echo "Running for development"
