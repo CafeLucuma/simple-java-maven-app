@@ -9,7 +9,7 @@ pipeline {
                 branch 'development'
             }
             steps {
-                sshagent (credentials: ['07f7c5fc-81d1-4d28-a966-f8fafad37aee']) {
+                sshagent (credentials: ['ssh-local']) {
                     sh 'ssh admin1@192.168.0.158'
                     sh 'echo $MACHINE_NAME'
                     sh 'ls'
